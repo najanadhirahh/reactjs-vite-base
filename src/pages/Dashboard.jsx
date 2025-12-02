@@ -91,11 +91,11 @@ const Dashboard = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom fontWeight="bold" mt={3}>
+      <Typography variant="title" gutterBottom fontWeight="bold" mt={3} sx={{ display: 'block' }}>
         Dashboard Overview
       </Typography>
       
-      <Typography variant="body1" color="text.secondary" mb={4}>
+      <Typography variant="body" color="text.secondary" mb={4} sx={{ display: 'block' }}>
         Welcome back! Here's what's happening with your business today.
       </Typography>
 
@@ -107,10 +107,10 @@ const Dashboard = () => {
               <CardContent>
                 <Box display="flex" alignItems="center" justifyContent="space-between">
                   <Box>
-                    <Typography color="text.secondary" gutterBottom variant="body2">
+                    <Typography color="text.secondary" gutterBottom variant="text" sx={{ display: 'block' }}>
                       {stat.title}
                     </Typography>
-                    <Typography variant="h4" fontWeight="bold">
+                    <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
                       {stat.value}
                     </Typography>
                     <Chip
@@ -144,7 +144,7 @@ const Dashboard = () => {
         {/* Revenue Chart */}
         <Grid item xs={12} lg={8}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
+            <Typography variant="subtitle" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
               Revenue Overview
             </Typography>
             <Box height={300}>
@@ -172,7 +172,7 @@ const Dashboard = () => {
           <Paper elevation={2} sx={{ p: 3, height: 'fit-content' }}>
             <Box display="flex" alignItems="center" mb={2}>
               <NotificationsOutlined sx={{ mr: 1, color: 'primary.main' }} />
-              <Typography variant="h6" fontWeight="bold">
+              <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
                 Recent Activities
               </Typography>
             </Box>
@@ -186,10 +186,10 @@ const Dashboard = () => {
                     primary={activity.user}
                     secondary={
                       <Box>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                           {activity.action}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
+                        <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                           {activity.time}
                         </Typography>
                       </Box>
@@ -204,7 +204,7 @@ const Dashboard = () => {
         {/* Orders Chart */}
         <Grid item xs={12} lg={6}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
+            <Typography variant="subtitle" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
               Monthly Orders
             </Typography>
             <Box height={250}>
@@ -224,14 +224,14 @@ const Dashboard = () => {
         {/* Quick Stats */}
         <Grid item xs={12} lg={6}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
+            <Typography variant="subtitle" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
               Performance Metrics
             </Typography>
             <Box mt={2}>
               <Box mb={3}>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Conversion Rate</Typography>
-                  <Typography variant="body2" fontWeight="bold">75%</Typography>
+                  <Typography variant="text" sx={{ display: 'block' }}>Conversion Rate</Typography>
+                  <Typography variant="text" fontWeight="bold" sx={{ display: 'block' }}>75%</Typography>
                 </Box>
                 <LinearProgress
                   variant="determinate"
@@ -242,8 +242,8 @@ const Dashboard = () => {
               
               <Box mb={3}>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Customer Satisfaction</Typography>
-                  <Typography variant="body2" fontWeight="bold">92%</Typography>
+                  <Typography variant="text" sx={{ display: 'block' }}>Customer Satisfaction</Typography>
+                  <Typography variant="text" fontWeight="bold" sx={{ display: 'block' }}>92%</Typography>
                 </Box>
                 <LinearProgress
                   variant="determinate"
@@ -255,8 +255,8 @@ const Dashboard = () => {
               
               <Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Server Uptime</Typography>
-                  <Typography variant="body2" fontWeight="bold">99.9%</Typography>
+                  <Typography variant="text" sx={{ display: 'block' }}>Server Uptime</Typography>
+                  <Typography variant="text" fontWeight="bold" sx={{ display: 'block' }}>99.9%</Typography>
                 </Box>
                 <LinearProgress
                   variant="determinate"

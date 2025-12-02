@@ -84,10 +84,10 @@ const Signup = () => {
       >
           <Box textAlign="center" mb={3}>
             <PersonAddOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
+            <Typography variant="title" component="h1" gutterBottom sx={{ display: 'block' }}>
               Create Account
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
               Join us today and get started
             </Typography>
           </Box>
@@ -159,16 +159,16 @@ const Signup = () => {
             </Button>
 
             <Divider sx={{ my: 2 }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 OR
               </Typography>
             </Divider>
 
             <Box textAlign="center">
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 Already have an account?{' '}
                 <Link to="/login" style={{ textDecoration: 'none' }}>
-                  <Typography component="span" color="primary" fontWeight="medium">
+                  <Typography component="span" color="primary" fontWeight="medium" sx={{ display: 'block' }}>
                     Sign in
                   </Typography>
                 </Link>

@@ -104,11 +104,11 @@ const Profile = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom fontWeight="bold" mt={3}>
+      <Typography variant="title" gutterBottom fontWeight="bold" mt={3} sx={{ display: 'block' }}>
         Profile Settings
       </Typography>
       
-      <Typography variant="body1" color="text.secondary" mb={4}>
+      <Typography variant="body" color="text.secondary" mb={4} sx={{ display: 'block' }}>
         Manage your account settings and preferences.
       </Typography>
 
@@ -123,7 +123,7 @@ const Profile = () => {
         <Grid item xs={12} lg={8}>
           <Paper elevation={2} sx={{ p: 3 }}>
             <Box display="flex" justifyContent="between" alignItems="center" mb={3}>
-              <Typography variant="h6" fontWeight="bold">
+              <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
                 Personal Information
               </Typography>
               {!editing ? (
@@ -131,6 +131,7 @@ const Profile = () => {
                   startIcon={<EditOutlined />}
                   onClick={() => setEditing(true)}
                   variant="outlined"
+                  sx={{mx: 2}}
                 >
                   Edit Profile
                 </Button>
@@ -238,24 +239,24 @@ const Profile = () => {
         {/* Account Stats */}
         <Grid item xs={12} lg={4}>
           <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" fontWeight="bold" mb={2}>
+            <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
               Account Statistics
             </Typography>
             <Box display="flex" flexDirection="column" gap={2}>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="body2">Member Since</Typography>
+                <Typography variant="body" sx={{ display: 'block' }}>Member Since</Typography>
                 <Chip label="Jan 2024" size="small" />
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="body2">Last Login</Typography>
+                <Typography variant="body" sx={{ display: 'block' }}>Last Login</Typography>
                 <Chip label="Today" size="small" color="success" />
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="body2">Profile Views</Typography>
+                <Typography variant="body" sx={{ display: 'block' }}>Profile Views</Typography>
                 <Chip label="1,234" size="small" color="info" />
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="body2">Status</Typography>
+                <Typography variant="body" sx={{ display: 'block' }}>Status</Typography>
                 <Chip label="Active" size="small" color="success" />
               </Box>
             </Box>
@@ -263,7 +264,7 @@ const Profile = () => {
 
           {/* Quick Actions */}
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" fontWeight="bold" mb={2}>
+            <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
               Quick Actions
             </Typography>
             <Box display="flex" flexDirection="column" gap={1}>
@@ -285,14 +286,14 @@ const Profile = () => {
           <Paper elevation={2} sx={{ p: 3 }}>
             <Box display="flex" alignItems="center" mb={3}>
               <PaletteOutlined sx={{ mr: 1, color: 'primary.main' }} />
-              <Typography variant="h6" fontWeight="bold">
+              <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
                 Theme Customization
               </Typography>
             </Box>
 
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle1" fontWeight="bold" mb={2}>
+                <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
                   Primary Color
                 </Typography>
                 <Box display="flex" gap={1} flexWrap="wrap">
@@ -313,7 +314,7 @@ const Profile = () => {
                       }}
                     >
                       {tempTheme.primaryColor === color.value && (
-                        <Typography variant="caption" color="white" fontWeight="bold">
+                        <Typography variant="text" color="white" fontWeight="bold">
                           ✓
                         </Typography>
                       )}
@@ -323,7 +324,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle1" fontWeight="bold" mb={2}>
+                <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
                   Font Family
                 </Typography>
                 <FormControl fullWidth>

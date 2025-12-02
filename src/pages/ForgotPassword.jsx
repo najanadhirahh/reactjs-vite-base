@@ -60,13 +60,13 @@ const ForgotPassword = () => {
           }}
         >
             <CheckCircleOutlined sx={{ fontSize: { xs: 56, sm: 64 }, color: 'success.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
+            <Typography variant="title" component="h1" gutterBottom sx={{ display: 'block' }}>
               Check Your Email
             </Typography>
-            <Typography variant="body1" color="text.secondary" mb={3}>
+            <Typography variant="body" color="text.secondary" mb={3} sx={{ display: 'block' }}>
               We've sent a password reset link to <strong>{email}</strong>
             </Typography>
-            <Typography variant="body2" color="text.secondary" mb={3}>
+            <Typography variant="text" color="text.secondary" mb={3} sx={{ display: 'block' }}>
               Didn't receive the email? Check your spam folder or try again.
             </Typography>
             <Link to="/login" style={{ textDecoration: 'none' }}>
@@ -102,10 +102,10 @@ const ForgotPassword = () => {
       >
           <Box textAlign="center" mb={3}>
             <LockResetOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
+            <Typography variant="title" component="h1" gutterBottom sx={{ display: 'block' }}>
               Reset Password
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
               Enter your email address and we'll send you a link to reset your password
             </Typography>
           </Box>
@@ -141,7 +141,7 @@ const ForgotPassword = () => {
          
             <Box textAlign="center">
               <Link to="/login" style={{ textDecoration: 'none' }}>
-                <Typography variant="body2" color="primary">
+                <Typography variant="text" color="primary" sx={{ display: 'block' }}>
                   Back to Login
                 </Typography>
               </Link>

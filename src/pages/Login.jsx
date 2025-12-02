@@ -48,10 +48,10 @@ const Login = () => {
       }}> 
           <Box textAlign="center" mb={3}>
             <LoginOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
+            <Typography variant="title" gutterBottom sx={{ display: 'block' }}>
               Welcome Back
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="subtitle" color="text.secondary" sx={{ display: 'block' }}>
               Sign in to your account
             </Typography>
           </Box>
@@ -99,23 +99,23 @@ const Login = () => {
 
             <Box textAlign="center">
               <Link to="/forgot-password" style={{ textDecoration: 'none' }}>
-                <Typography variant="body2" color="primary">
+                <Typography variant="text" color="primary" sx={{ display: 'block' }}>
                   Forgot your password?
                 </Typography>
               </Link>
             </Box>
 
             <Divider sx={{ my: 2 }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 OR
               </Typography>
             </Divider>
 
             <Box textAlign="center">
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 Don't have an account?{' '}
                 <Link to="/signup" style={{ textDecoration: 'none' }}>
-                  <Typography component="span" color="primary" fontWeight="medium">
+                  <Typography component="span" color="primary" fontWeight="medium" sx={{ display: 'block' }}>
                     Sign up
                   </Typography>
                 </Link>
@@ -124,7 +124,7 @@ const Login = () => {
           </Box>
 
           <Box mt={3} p={2} bgcolor="grey.50" borderRadius={1}>
-            <Typography variant="body2" color="text.secondary" textAlign="center">
+            <Typography variant="text" color="text.secondary" textAlign="center" sx={{ display: 'block' }}>
               <strong>Demo Credentials:</strong><br />
               Email: admin@example.com<br />
               Password: password
