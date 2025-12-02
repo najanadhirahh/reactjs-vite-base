@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
-import Sidebar from './Sidebar';
-import AppBar from './AppBar';
+import Sidebar from '../Sidebar';
+import AppBar from '../AppBar';
 
 const Layout = () => {
   const theme = useTheme();
