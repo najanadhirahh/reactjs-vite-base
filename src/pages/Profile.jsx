@@ -104,7 +104,7 @@ const Profile = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
+      <Typography variant="h4" gutterBottom fontWeight="bold" mt={3}>
         Profile Settings
       </Typography>
       

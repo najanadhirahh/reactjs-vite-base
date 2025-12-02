@@ -62,7 +62,7 @@ export const ThemeProvider = ({ children }) => {
   
   const [fontFamily, setFontFamily] = useState(() => {
     const savedFont = localStorage.getItem('fontFamily');
-    return savedFont || '"Roboto", "Helvetica", "Arial", sans-serif';
+    return savedFont || '"Poppins", sans-serif';
   });
 
   useEffect(() => {

@@ -45,20 +45,22 @@ const ForgotPassword = () => {
           alignItems: 'center',
           justifyContent: 'center',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          padding: 2,
+          padding: { xs: 1.5, sm: 2, md: 3 },
         }}
       >
-        <Container maxWidth="sm">
-          <Paper
-            elevation={10}
-            sx={{
-              padding: 4,
-              borderRadius: 2,
-              textAlign: 'center',
-            }}
-          >
-            <CheckCircleOutlined sx={{ fontSize: 64, color: 'success.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom>
+        <Paper
+          elevation={10}
+          sx={{
+            padding: { xs: 2.5, sm: 3, md: 4 },
+            borderRadius: 2,
+            textAlign: 'center',
+            maxWidth: 400,
+            width: '100%',
+            boxShadow: { xs: 8, sm: 10 }
+          }}
+        >
+            <CheckCircleOutlined sx={{ fontSize: { xs: 56, sm: 64 }, color: 'success.main', mb: 2 }} />
+            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
               Check Your Email
             </Typography>
             <Typography variant="body1" color="text.secondary" mb={3}>
@@ -72,8 +74,7 @@ const ForgotPassword = () => {
                 Back to Login
               </Button>
             </Link>
-          </Paper>
-        </Container>
+        </Paper>
       </Box>
     );
   }
@@ -86,20 +87,22 @@ const ForgotPassword = () => {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: 2,
+        padding: { xs: 1.5, sm: 2, md: 3 },
       }}
     >
-      <Container maxWidth="sm">
-        <Paper
-          elevation={10}
-          sx={{
-            padding: 4,
-            borderRadius: 2,
-          }}
-        >
+      <Paper
+        elevation={10}
+        sx={{
+          padding: { xs: 2.5, sm: 3, md: 4 },
+          borderRadius: 2,
+          maxWidth: 400,
+          width: '100%',
+          boxShadow: { xs: 8, sm: 10 }
+        }}
+      >
           <Box textAlign="center" mb={3}>
-            <LockResetOutlined sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom>
+            <LockResetOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
+            <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
               Reset Password
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -125,18 +128,17 @@ const ForgotPassword = () => {
               autoComplete="email"
               autoFocus
             />
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
               size="large"
               disabled={loading}
-              sx={{ mt: 3, mb: 2, py: 1.5 }}
+              sx={{ mt: 3, mb: 2, py: { xs: 1, sm: 1.5 } }}
             >
               {loading ? <CircularProgress size={24} /> : 'Send Reset Link'}
             </Button>
-
+         
             <Box textAlign="center">
               <Link to="/login" style={{ textDecoration: 'none' }}>
                 <Typography variant="body2" color="primary">
@@ -146,7 +148,6 @@ const ForgotPassword = () => {
             </Box>
           </Box>
         </Paper>
-      </Container>
     </Box>
   );
 };
