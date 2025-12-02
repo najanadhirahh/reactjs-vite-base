@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import {
   Grid,
   Paper,
