@@ -44,6 +44,7 @@ const Login = () => {
         borderRadius: 2, 
         maxWidth: 400, 
         width: '100%',
+        height: '90%',
         boxShadow: { xs: 8, sm: 10 }
       }}> 
           <Box textAlign="center" mb={3}>
@@ -69,10 +70,11 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="email"
               autoFocus
+              size='small'
             />
             
             <TextField
@@ -81,9 +83,10 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="current-password"
+              size='small'
             />
 
             <Button

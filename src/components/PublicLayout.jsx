@@ -11,7 +11,7 @@ const PublicLayout = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        p: { xs: 1.5, sm: 2, md: 3 },
+        // p: { xs: 1.5, sm: 2, md: 3 },
         // background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >

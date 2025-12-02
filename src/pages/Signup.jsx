@@ -62,26 +62,15 @@ const Signup = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: { xs: 1.5, sm: 2, md: 3 },
-      }}
-    >
-      <Paper
-        elevation={10}
-        sx={{
-          padding: { xs: 2.5, sm: 3, md: 4 },
-          borderRadius: 2,
-          maxWidth: 400,
-          width: '100%',
-          boxShadow: { xs: 8, sm: 10 }
-        }}
-      >
+    
+     <Paper elevation={10} sx={{ 
+        p: { xs: 2.5, sm: 3, md: 4 }, 
+        borderRadius: 2, 
+        maxWidth: 400, 
+        width: '100%',
+        height: '80%',
+        boxShadow: { xs: 8, sm: 10 }
+      }}> 
           <Box textAlign="center" mb={3}>
             <PersonAddOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
             <Typography variant="title" component="h1" gutterBottom sx={{ display: 'block' }}>
@@ -105,10 +94,11 @@ const Signup = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="name"
               autoFocus
+              size='small'
             />
 
             <TextField
@@ -118,9 +108,10 @@ const Signup = () => {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="email"
+              size='small'
             />
             
             <TextField
@@ -130,9 +121,10 @@ const Signup = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="new-password"
+              size='small'
             />
 
             <TextField
@@ -142,9 +134,10 @@ const Signup = () => {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="new-password"
+              size='small'
             />
 
             <Button
@@ -176,7 +169,6 @@ const Signup = () => {
             </Box>
           </Box>
         </Paper>
-    </Box>
   );
 };
 
