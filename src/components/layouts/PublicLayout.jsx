@@ -11,13 +11,11 @@ const PublicLayout = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 2,
-        bgcolor: 'grey.50' // optional background
+        // p: { xs: 1.5, sm: 2, md: 3 },
+        // background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >
-      <Box sx={{ width: '100%', maxWidth: 400 }}>
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   );
 };

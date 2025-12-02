@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   Container,
   Paper,
@@ -62,30 +62,21 @@ const Signup = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: 2,
-      }}
-    >
-      <Container maxWidth="sm">
-        <Paper
-          elevation={10}
-          sx={{
-            padding: 4,
-            borderRadius: 2,
-          }}
-        >
+    
+     <Paper elevation={10} sx={{ 
+        p: { xs: 2.5, sm: 3, md: 4 }, 
+        borderRadius: 2, 
+        maxWidth: 400, 
+        width: '100%',
+        height: '80%',
+        boxShadow: { xs: 8, sm: 10 }
+      }}> 
           <Box textAlign="center" mb={3}>
-            <PersonAddOutlined sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom>
+            <PersonAddOutlined sx={{ fontSize: { xs: 40, sm: 48 }, color: 'primary.main', mb: 2 }} />
+            <Typography variant="title" component="h1" gutterBottom sx={{ display: 'block' }}>
               Create Account
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
               Join us today and get started
             </Typography>
           </Box>
@@ -103,10 +94,11 @@ const Signup = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="name"
               autoFocus
+              size='small'
             />
 
             <TextField
@@ -116,9 +108,10 @@ const Signup = () => {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="email"
+              size='small'
             />
             
             <TextField
@@ -128,9 +121,10 @@ const Signup = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="new-password"
+              size='small'
             />
 
             <TextField
@@ -140,9 +134,10 @@ const Signup = () => {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              margin="normal"
+              margin="dense"
               required
               autoComplete="new-password"
+              size='small'
             />
 
             <Button
@@ -151,22 +146,22 @@ const Signup = () => {
               variant="contained"
               size="large"
               disabled={loading}
-              sx={{ mt: 3, mb: 2, py: 1.5 }}
+              sx={{ mt: 3, mb: 2, py: { xs: 1, sm: 1.5 } }}
             >
               {loading ? <CircularProgress size={24} /> : 'Create Account'}
             </Button>
 
             <Divider sx={{ my: 2 }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 OR
               </Typography>
             </Divider>
 
             <Box textAlign="center">
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="text" color="text.secondary" sx={{ display: 'block' }}>
                 Already have an account?{' '}
                 <Link to="/login" style={{ textDecoration: 'none' }}>
-                  <Typography component="span" color="primary" fontWeight="medium">
+                  <Typography component="span" color="primary" fontWeight="medium" sx={{ display: 'block' }}>
                     Sign in
                   </Typography>
                 </Link>
@@ -174,8 +169,6 @@ const Signup = () => {
             </Box>
           </Box>
         </Paper>
-      </Container>
-    </Box>
   );
 };
 

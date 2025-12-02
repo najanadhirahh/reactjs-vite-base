@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
+import ProtectedRoute from './components/layouts/ProtectedRoute';
+import Layout from './components/layouts/Layout';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import Dashboard from './pages/dashboard/Dashboard';
+import Profile from './pages/profile/Profile';
 import { CssBaseline } from '@mui/material';
 import theme from './theme';
-import PublicLayout from './components/PublicLayout';
+import PublicLayout from './components/layouts/PublicLayout';
 
 const App = () => {
   return (
