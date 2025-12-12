@@ -85,7 +85,7 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
           </IconButton>
         )}
         
-        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="subtitle" noWrap component="div" sx={{ flexGrow: 1, display: 'block' }}>
           {getPageTitle()}
         </Typography>
 
@@ -130,10 +130,10 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
             }}
           >
             <Box sx={{ px: 2, py: 1 }}>
-              <Typography variant="subtitle2" noWrap>
+              <Typography variant="body" noWrap fontWeight="600" sx={{ display: 'block' }}>
                 {user?.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary" noWrap>
+              <Typography variant="text" color="text.secondary" noWrap sx={{ display: 'block' }}>
                 {user?.email}
               </Typography>
             </Box>

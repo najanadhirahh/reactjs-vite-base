@@ -79,11 +79,11 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
               justifyContent: 'center',
             }}
           >
-            <Typography variant="h6" color="white" fontWeight="bold">
+            <Typography variant="text" color="white" fontWeight="bold" sx={{ display: 'block' }}>
               A
             </Typography>
           </Box>
-          <Typography variant="h6" noWrap component="div" fontWeight="bold">
+          <Typography variant="subtitle" noWrap component="div" fontWeight="bold" sx={{ display: 'block' }}>
             Admin Portal
           </Typography>
         </Box>
@@ -143,7 +143,7 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
       <Divider />
 
       <Box sx={{ p: 2 }}>
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="text" color="text.secondary">
           Admin Portal v1.0.0
         </Typography>
       </Box>

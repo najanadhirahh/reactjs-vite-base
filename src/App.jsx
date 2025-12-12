@@ -12,7 +12,7 @@ import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
 import { CssBaseline } from '@mui/material';
 import theme from './theme';
-import PublicLayout from './components/PublicLayout';
+import PublicLayout from './components/layouts/PublicLayout';
 
 const App = () => {
   return (

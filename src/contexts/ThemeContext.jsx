@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import baseTheme from '../theme';
 
 const ThemeContext = createContext();
 
@@ -14,9 +15,13 @@ export const useTheme = () => {
 
 const createCustomTheme = (mode, primaryColor, fontFamily) => {
   return createTheme({
+    // Spread all settings from base theme
+    ...baseTheme,
     palette: {
+      ...baseTheme.palette,
       mode,
       primary: {
+        ...baseTheme.palette.primary,
         main: primaryColor,
       },
       background: {
@@ -25,9 +30,11 @@ const createCustomTheme = (mode, primaryColor, fontFamily) => {
       },
     },
     typography: {
+      ...baseTheme.typography,
       fontFamily: fontFamily,
     },
     components: {
+      ...baseTheme.components,
       MuiDrawer: {
         styleOverrides: {
           paper: {
@@ -57,12 +64,12 @@ export const ThemeProvider = ({ children }) => {
   
   const [primaryColor, setPrimaryColor] = useState(() => {
     const savedColor = localStorage.getItem('primaryColor');
-    return savedColor || '#1976d2';
+    return savedColor || baseTheme.palette.primary.main;
   });
   
   const [fontFamily, setFontFamily] = useState(() => {
     const savedFont = localStorage.getItem('fontFamily');
-    return savedFont || '"Roboto", "Helvetica", "Arial", sans-serif';
+    return savedFont || baseTheme.typography.fontFamily;
   });
 
   useEffect(() => {
