@@ -8,6 +8,7 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import Dashboard from './pages/dashboard/Dashboard';
+import UserList from './pages/users/UserList';
 import Profile from './pages/profile/Profile';
 import Unauthorized from './pages/Unauthorized';
 import { CssBaseline } from '@mui/material';
@@ -48,7 +49,7 @@ const App = () => {
               } />
               <Route path="users" element={
                 <ProtectedRoute allowedRoles={['admin']}>
-                  <Dashboard />
+                  <UserList />
                 </ProtectedRoute>
               } />
               <Route path="settings" element={<Profile />} />

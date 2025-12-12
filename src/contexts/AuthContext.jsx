@@ -10,36 +10,49 @@ export const useAuth = () => {
   return context;
 };
 
+// Dummy users for testing
+const DUMMY_USERS = [
+  {
+    id: 1,
+    email: 'admin@example.com',
+    password: 'password',
+    name: 'Admin User',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    role: 'admin'
+  },
+  {
+    id: 2,
+    email: 'user@example.com',
+    password: 'password',
+    name: 'User User',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    role: 'user'
+  },
+  {
+    id: 3,
+    email: 'manager@example.com',
+    password: 'password',
+    name: 'Manager User',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    role: 'manager'
+  }
+];
+
 // Mock API service
 const mockAPI = {
   login: async (email, password) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (email === 'admin@example.com' && password === 'password') {
-      const user = {
-        id: 1,
-        email: 'admin@example.com',
-        name: 'Admin User',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-        role: 'admin'
-      };
+    const user = DUMMY_USERS.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      // Return user without password
+      const { password: _, ...userWithoutPassword } = user;
       const token = 'mock-jwt-token-' + Date.now();
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      return { user, token };
-    } else if (email === 'user@example.com' && password === 'password') {
-      const user = {
-        id: 1,
-        email: 'user@example.com',
-        name: 'User User',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-        role: 'user'
-      };
-      const token = 'mock-jwt-token-' + Date.now();
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      return { user, token };
+      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+      return { user: userWithoutPassword, token };
     } else {
       throw new Error('Invalid credentials');
     }

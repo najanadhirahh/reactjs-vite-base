@@ -42,7 +42,7 @@ const Layout = () => {
         }}
       >
         {/* Spacer for AppBar */}
-        <Box sx={{ height: 64 }} />
+        <Box sx={{ height: 68 }} />
 
         {/* Scrollable content area */}
         <Box
@@ -50,9 +50,8 @@ const Layout = () => {
             flexGrow: 1,
             overflow: 'auto',
             p: 3,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            // mt: 5,
+            backgroundColor: 'white',
           }}
         >
           <Outlet />

@@ -4,30 +4,6 @@ import { createTheme } from '@mui/material/styles';
 // Typography configuration
 const fontFamily = '"Poppins", sans-serif';
 
-const typographyConfig = {
-  // Simplified typography with only 4 sizes
-  title: {
-    fontSize: '24px', // Title
-    fontWeight: 600,
-    lineHeight: 1.3,
-  },
-  subtitle: {
-    fontSize: '20px', // Subtitle
-    fontWeight: 600,
-    lineHeight: 1.4,
-  },
-  body: {
-    fontSize: '14px', // Body
-    fontWeight: 400,
-    lineHeight: 1.5,
-  },
-  text: {
-    fontSize: '12px', // Text
-    fontWeight: 400,
-    lineHeight: 1.5,
-  },
-};
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -62,7 +38,45 @@ const theme = createTheme({
 
   typography: {
     fontFamily: fontFamily,
-    ...typographyConfig,
+    // Standardizing to REM units (Base 16px)
+    // 24px = 1.5rem
+    // 20px = 1.25rem
+    // 16px = 1rem
+    // 14px = 0.875rem
+    // 12px = 0.75rem
+
+    // Custom variants (Mapping to standard logic)
+    title: {
+      fontSize: '1.5rem', // 24px
+      fontWeight: 600,
+      lineHeight: 1.3,
+    },
+    subtitle: {
+      fontSize: '1.25rem', // 20px
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
+    body: {
+      fontSize: '0.875rem', // 14px
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+    text: {
+      fontSize: '0.75rem', // 12px
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    // Standard MUI variants
+    h1: { fontSize: '2.5rem', fontWeight: 600 },
+    h2: { fontSize: '2rem', fontWeight: 600 },
+    h3: { fontSize: '1.75rem', fontWeight: 600 },
+    h4: { fontSize: '1.5rem', fontWeight: 600 }, // Matches 'title'
+    h5: { fontSize: '1.25rem', fontWeight: 600 }, // Matches 'subtitle'
+    h6: { fontSize: '1rem', fontWeight: 600 },
+    body1: { fontSize: '0.875rem', lineHeight: 1.5 }, // Matches 'body' / Dashboard text
+    body2: { fontSize: '0.75rem', lineHeight: 1.5 }, // Matches 'text' / Table dense text
+    button: { textTransform: 'none', fontWeight: 500 },
   },
 
   components: {
@@ -89,25 +103,27 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
           borderRadius: 8,
-          fontFamily: fontFamily,
+          // Remove custom font-size override to inherit standard 'button' typography
         },
       },
     },
 
     MuiTypography: {
       defaultProps: {
-        fontFamily: fontFamily,
-        variant: 'body', // Default to body variant if not specified
+        variantMapping: {
+          title: 'h4',
+          subtitle: 'h5',
+          body: 'p',
+          text: 'span',
+        },
       },
     },
 
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          fontSize: '14px !important',
-          fontFamily: fontFamily,
+          fontSize: '0.875rem', // 14px standardized
         },
       },
     },
@@ -115,11 +131,19 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '14px !important',
-          fontFamily: fontFamily,
+          fontSize: '0.875rem', // 14px standardized
         },
       },
     },
+
+    // Ensure DataGrid uses standard fonts
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          fontSize: '0.875rem', // Ensure grid text matches body size
+        }
+      }
+    }
   },
 });
 

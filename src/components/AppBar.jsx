@@ -84,7 +84,7 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
             <MenuOutlined />
           </IconButton>
         )}
-        
+
         <Typography variant="subtitle" noWrap component="div" sx={{ flexGrow: 1, display: 'block' }}>
           {getPageTitle()}
         </Typography>
@@ -110,7 +110,7 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
               {user?.name?.charAt(0)}
             </Avatar>
           </IconButton>
-          
+
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -137,16 +137,16 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
                 {user?.email}
               </Typography>
             </Box>
-            
+
             <Divider />
-            
+
             <MenuItem onClick={handleProfile}>
               <ListItemIcon>
                 <AccountCircleOutlined fontSize="small" />
               </ListItemIcon>
               <ListItemText>Profile</ListItemText>
             </MenuItem>
-            
+
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutOutlined fontSize="small" />

@@ -90,8 +90,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box>
-      <Typography variant="title" gutterBottom fontWeight="bold" mt={3} sx={{ display: 'block' }}>
+    <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', py: 2 }}>
+      <Typography variant="title" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
         Dashboard Overview
       </Typography>
       
