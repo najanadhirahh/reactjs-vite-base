@@ -15,13 +15,26 @@ const mockAPI = {
   login: async (email, password) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     if (email === 'admin@example.com' && password === 'password') {
       const user = {
         id: 1,
         email: 'admin@example.com',
         name: 'Admin User',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+        role: 'admin'
+      };
+      const token = 'mock-jwt-token-' + Date.now();
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      return { user, token };
+    } else if (email === 'user@example.com' && password === 'password') {
+      const user = {
+        id: 1,
+        email: 'user@example.com',
+        name: 'User User',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+        role: 'user'
       };
       const token = 'mock-jwt-token-' + Date.now();
       localStorage.setItem('token', token);
@@ -35,12 +48,13 @@ const mockAPI = {
   signup: async (email, password, name) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     const user = {
       id: Date.now(),
       email,
       name,
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+      role: 'user'
     };
     const token = 'mock-jwt-token-' + Date.now();
     localStorage.setItem('token', token);

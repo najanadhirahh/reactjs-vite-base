@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import {
   Drawer,
   List,
@@ -18,6 +19,7 @@ import {
   SettingsOutlined,
   AnalyticsOutlined,
   PeopleOutlined,
+  LockOutlined,
 } from '@mui/icons-material';
 
 const menuItems = [
@@ -30,11 +32,13 @@ const menuItems = [
     text: 'Analytics',
     icon: <AnalyticsOutlined />,
     path: '/analytics',
+    allowedRoles: ['admin'],
   },
   {
     text: 'Users',
     icon: <PeopleOutlined />,
     path: '/users',
+    allowedRoles: ['admin'],
   },
   {
     text: 'Profile',
@@ -49,6 +53,7 @@ const menuItems = [
 ];
 
 const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -83,53 +88,60 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
           </Typography>
         </Box>
       </Toolbar>
-      
+
       <Divider />
-      
+
       <List sx={{ flexGrow: 1, px: 1 }}>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              onClick={() => handleNavigation(item.path)}
-              selected={location.pathname === item.path}
-              sx={{
-                borderRadius: 2,
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  '& .MuiListItemIcon-root': {
-                    color: 'primary.contrastText',
-                  },
-                },
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                },
-              }}
-            >
-              <ListItemIcon
+        {menuItems.map((item) => {
+          const isAllowed = !item.allowedRoles || (user && item.allowedRoles.includes(user.role));
+
+          return (
+            <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                onClick={() => isAllowed && handleNavigation(item.path)}
+                selected={location.pathname === item.path}
+                disabled={!isAllowed}
                 sx={{
-                  minWidth: 40,
-                  color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  borderRadius: 2,
+                  opacity: isAllowed ? 1 : 0.6,
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'primary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                    },
+                    '& .MuiListItemIcon-root': {
+                      color: 'primary.contrastText',
+                    },
+                  },
+                  '&:hover': {
+                    backgroundColor: isAllowed ? 'action.hover' : 'transparent',
+                    cursor: isAllowed ? 'pointer' : 'not-allowed',
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText 
-                primary={item.text}
-                primaryTypographyProps={{
-                  fontWeight: location.pathname === item.path ? 600 : 400,
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  }}
+                >
+                  {isAllowed ? item.icon : <LockOutlined />}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    fontWeight: location.pathname === item.path ? 600 : 400,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
-      
+
       <Divider />
-      
+
       <Box sx={{ p: 2 }}>
         <Typography variant="caption" color="text.secondary">
           Admin Portal v1.0.0
@@ -161,7 +173,7 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
       >
         {drawer}
       </Drawer>
-      
+
       {/* Desktop drawer */}
       <Drawer
         variant="permanent"
