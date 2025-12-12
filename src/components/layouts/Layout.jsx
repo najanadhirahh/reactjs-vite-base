@@ -17,19 +17,19 @@ const Layout = () => {
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
-      <AppBar 
-        drawerWidth={drawerWidth} 
+      <AppBar
+        drawerWidth={drawerWidth}
         handleDrawerToggle={handleDrawerToggle}
         isMobile={isMobile}
       />
-      
+
       <Sidebar
         drawerWidth={drawerWidth}
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
         isMobile={isMobile}
       />
-      
+
       <Box
         component="main"
         sx={{
@@ -43,13 +43,16 @@ const Layout = () => {
       >
         {/* Spacer for AppBar */}
         <Box sx={{ height: 64 }} />
-        
+
         {/* Scrollable content area */}
         <Box
           sx={{
             flexGrow: 1,
             overflow: 'auto',
             p: 3,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Outlet />
