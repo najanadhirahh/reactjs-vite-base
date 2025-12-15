@@ -12,6 +12,7 @@ import {
   Box,
   Divider,
   Toolbar,
+  IconButton,
 } from '@mui/material';
 import {
   DashboardOutlined,
@@ -20,6 +21,8 @@ import {
   AnalyticsOutlined,
   PeopleOutlined,
   LockOutlined,
+  ChevronRight,
+  ChevronLeft,
 } from '@mui/icons-material';
 
 const menuItems = [
@@ -52,8 +55,15 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
-  const { user } = useAuth();
+const Sidebar = ({
+  drawerWidth,
+  collapsedWidth,
+  mobileOpen,
+  collapsed,
+  handleDrawerToggle,
+  handleCollapseToggle,
+  isMobile
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -64,87 +74,180 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
     }
   };
 
-  const drawer = (
+  // Drawer content for collapsed state
+  const collapsedDrawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Toolbar>
+      <Toolbar sx={{
+        justifyContent: 'center',
+        minHeight: '64px !important',
+        px: 0
+      }}>
+        <IconButton
+          onClick={handleCollapseToggle}
+          color="inherit"
+          size="small"
+        >
+          <ChevronRight />
+        </IconButton>
+      </Toolbar>
+
+      <Divider />
+
+      <List sx={{ flexGrow: 1, px: 0.5 }}>
+        {menuItems.map((item) => (
+          <ListItem key={item.text} disablePadding sx={{
+            mb: 0.5,
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <ListItemButton
+              onClick={() => handleNavigation(item.path)}
+              selected={location.pathname === item.path}
+              sx={{
+                borderRadius: 2,
+                width: 40,
+                height: 40,
+                minHeight: 40,
+                justifyContent: 'center',
+                p: 0,
+                '&.Mui-selected': {
+                  backgroundColor: 'primary.main',
+                  color: 'primary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'primary.dark',
+                  },
+                },
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 'auto',
+                  color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  justifyContent: 'center',
+                  margin: 0,
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+
+      <Divider />
+
+      <Box sx={{ p: 1, display: 'flex', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            width: 36,
+            height: 36,
+            borderRadius: 2,
+            background: (theme) =>
+              `linear-gradient(135deg, ${theme.palette.secondary.light} 0%, ${theme.palette.primary.main} 100%)`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="caption" color="white" fontWeight="bold">
+            A
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  );
+
+  // Drawer content for expanded state
+  const expandedDrawer = (
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Toolbar sx={{
+        justifyContent: 'space-between',
+        minHeight: '64px !important',
+        px: 2
+      }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Box
             sx={{
               width: 40,
               height: 40,
               borderRadius: 2,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: (theme) => theme.palette.primary.main,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Typography variant="text" color="white" fontWeight="bold" sx={{ display: 'block' }}>
+            <Typography variant="body2" color="white" fontWeight="bold">
               A
             </Typography>
           </Box>
-          <Typography variant="subtitle" noWrap component="div" fontWeight="bold" sx={{ display: 'block' }}>
+          <Typography variant="subtitle1" noWrap fontWeight="bold">
             Admin Portal
           </Typography>
         </Box>
+        <IconButton
+          onClick={handleCollapseToggle}
+          size="small"
+          sx={{ ml: 1 }}
+        >
+          <ChevronLeft />
+        </IconButton>
       </Toolbar>
 
       <Divider />
 
-      <List sx={{ flexGrow: 1, px: 1 }}>
-        {menuItems.map((item) => {
-          const isAllowed = !item.allowedRoles || (user && item.allowedRoles.includes(user.role));
-
-          return (
-            <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
-              <ListItemButton
-                onClick={() => isAllowed && handleNavigation(item.path)}
-                selected={location.pathname === item.path}
-                disabled={!isAllowed}
-                sx={{
-                  borderRadius: 2,
-                  opacity: isAllowed ? 1 : 0.6,
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.main',
-                    color: 'primary.contrastText',
-                    '&:hover': {
-                      backgroundColor: 'primary.dark',
-                    },
-                    '& .MuiListItemIcon-root': {
-                      color: 'primary.contrastText',
-                    },
-                  },
+      <List sx={{ flexGrow: 1, px: 1.5 }}>
+        {menuItems.map((item) => (
+          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
+            <ListItemButton
+              onClick={() => handleNavigation(item.path)}
+              selected={location.pathname === item.path}
+              sx={{
+                borderRadius: 2,
+                py: 1.25,
+                '&.Mui-selected': {
+                  backgroundColor: 'primary.main',
+                  color: 'primary.contrastText',
                   '&:hover': {
-                    backgroundColor: isAllowed ? 'action.hover' : 'transparent',
-                    cursor: isAllowed ? 'pointer' : 'not-allowed',
+                    backgroundColor: 'primary.dark',
                   },
+                  '& .MuiListItemIcon-root': {
+                    color: 'primary.contrastText',
+                  },
+                },
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 40,
+                  color: location.pathname === item.path ? 'inherit' : 'text.secondary',
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 40,
-                    color: location.pathname === item.path ? 'inherit' : 'text.secondary',
-                  }}
-                >
-                  {isAllowed ? item.icon : <LockOutlined />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  primaryTypographyProps={{
-                    fontWeight: location.pathname === item.path ? 600 : 400,
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                primaryTypographyProps={{
+                  fontWeight: location.pathname === item.path ? 600 : 400,
+                  fontSize: '0.875rem',
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
 
       <Divider />
 
       <Box sx={{ p: 2 }}>
-        <Typography variant="text" color="text.secondary">
-          Admin Portal v1.0.0
+        <Typography variant="caption" color="text.secondary">
+          v1.0.0
         </Typography>
       </Box>
     </Box>
@@ -153,7 +256,12 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
   return (
     <Box
       component="nav"
-      sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+      sx={{
+        width: {
+          md: collapsed ? collapsedWidth : drawerWidth
+        },
+        flexShrink: { md: 0 },
+      }}
     >
       {/* Mobile drawer */}
       <Drawer
@@ -161,7 +269,7 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
@@ -171,7 +279,7 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
           },
         }}
       >
-        {drawer}
+        {expandedDrawer}
       </Drawer>
 
       {/* Desktop drawer */}
@@ -181,12 +289,19 @@ const Sidebar = ({ drawerWidth, mobileOpen, handleDrawerToggle, isMobile }) => {
           display: { xs: 'none', md: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            width: drawerWidth,
+            width: collapsed ? collapsedWidth : drawerWidth,
+            overflowX: 'hidden',
+            transition: (theme) => theme.transitions.create('width', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+            borderRight: '1px solid',
+            borderColor: 'divider',
           },
         }}
         open
       >
-        {drawer}
+        {collapsed ? collapsedDrawer : expandedDrawer}
       </Drawer>
     </Box>
   );

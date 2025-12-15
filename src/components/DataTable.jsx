@@ -144,6 +144,13 @@ const DataTable = ({
                     '& .MuiDataGrid-cell:focus': {
                         outline: 'none',
                     },
+                    '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: '#b4b4b4ff',
+                        borderBottom: '1px solid #e0e0e0',
+                    },
+                    '& .MuiDataGrid-columnHeader': {
+                        backgroundColor: '#b4b4b4ff',
+                    },
                 }}
             />
         </Box>

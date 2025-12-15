@@ -8,25 +8,36 @@ const Layout = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawerWidth = 280;
+  const handleCollapseToggle = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const drawerWidth = 240;
+  const collapsedWidth = 60;
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <AppBar
         drawerWidth={drawerWidth}
+        collapsed={collapsed}
+        collapsedWidth={collapsedWidth}
         handleDrawerToggle={handleDrawerToggle}
         isMobile={isMobile}
       />
 
       <Sidebar
         drawerWidth={drawerWidth}
+        collapsedWidth={collapsedWidth}
         mobileOpen={mobileOpen}
+        collapsed={collapsed}
         handleDrawerToggle={handleDrawerToggle}
+        handleCollapseToggle={handleCollapseToggle}
         isMobile={isMobile}
       />
 
@@ -34,24 +45,39 @@ const Layout = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          height: '100vh',
+          width: {
+            xs: '100%',
+            md: `calc(100% - ${collapsed ? collapsedWidth : drawerWidth}px)`
+          },
+          // height: '100vh',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
+          transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
         }}
       >
         {/* Spacer for AppBar */}
-        <Box sx={{ height: 68 }} />
+        <Box sx={{ height: 70 }} backgroundColor='#fff'
+        />
 
         {/* Scrollable content area */}
         <Box
+          backgroundColor='#fff'
           sx={{
             flexGrow: 1,
             overflow: 'auto',
-            p: 3,
-            // mt: 5,
-            backgroundColor: 'white',
+            // pt: 3,
+            px: { xs: 2, md: 1, lg: 1.5 },
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+            transition: theme.transitions.create('padding', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
           }}
         >
           <Outlet />

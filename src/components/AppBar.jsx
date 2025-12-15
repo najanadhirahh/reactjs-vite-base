@@ -16,6 +16,7 @@ import {
   FormControlLabel,
   Box,
   Divider,
+  useTheme,
 } from '@mui/material';
 import {
   MenuOutlined,
@@ -24,8 +25,9 @@ import {
   Brightness4Outlined,
   Brightness7Outlined,
 } from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
-const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
+const AppBar = ({ drawerWidth,collapsed,collapsedWidth, handleDrawerToggle, isMobile }) => {
   const { user, logout } = useAuth();
   const { mode, toggleColorMode } = useCustomTheme();
   const navigate = useNavigate();
@@ -62,14 +64,25 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
         return 'Admin Portal';
     }
   };
+  const theme = useTheme();
 
   return (
     <MuiAppBar
       position="fixed"
       sx={{
-        width: { md: `calc(100% - ${drawerWidth}px)` },
-        ml: { md: `${drawerWidth}px` },
-        zIndex: (theme) => theme.zIndex.drawer + 1,
+        width: { 
+          md: `calc(100% - ${collapsed ? collapsedWidth : drawerWidth}px)` 
+        },
+        ml: { md: collapsed ? collapsedWidth : drawerWidth },
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        backgroundColor: 'background.paper',
+        color: 'text.primary',
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        boxShadow: 'none',
       }}
     >
       <Toolbar>
@@ -81,18 +94,36 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
             onClick={handleDrawerToggle}
             sx={{ mr: 2 }}
           >
+            <MenuIcon />
+          </IconButton>
+        )}
+        
+        {/* <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" noWrap>
+            Dashboard
+          </Typography>
+        </Box> */}
+      {/* <Toolbar> */}
+        {/* {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2 }}
+          >
             <MenuOutlined />
           </IconButton>
         )}
-
-        <Typography variant="subtitle" noWrap component="div" sx={{ flexGrow: 1, display: 'block' }}>
+         */}
+        {/* <Typography variant="subtitle" noWrap component="div" sx={{ flexGrow: 1, display: 'block' }}>
           {getPageTitle()}
-        </Typography>
+        </Typography> */}
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton color="inherit" onClick={toggleColorMode}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'flex-end', gap: 1, width: '100%' }}>
+          {/* <IconButton color="inherit" onClick={toggleColorMode}>
             {mode === 'dark' ? <Brightness7Outlined /> : <Brightness4Outlined />}
-          </IconButton>
+          </IconButton> */}
 
           <IconButton
             size="large"
@@ -110,7 +141,7 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
               {user?.name?.charAt(0)}
             </Avatar>
           </IconButton>
-
+          
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -137,16 +168,16 @@ const AppBar = ({ drawerWidth, handleDrawerToggle, isMobile }) => {
                 {user?.email}
               </Typography>
             </Box>
-
+            
             <Divider />
-
+            
             <MenuItem onClick={handleProfile}>
               <ListItemIcon>
                 <AccountCircleOutlined fontSize="small" />
               </ListItemIcon>
               <ListItemText>Profile</ListItemText>
             </MenuItem>
-
+            
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutOutlined fontSize="small" />
