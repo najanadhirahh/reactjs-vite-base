@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import {
@@ -34,17 +34,25 @@ const Profile = () => {
   const { user } = useAuth();
   const { mode, primaryColor, fontFamily, setPrimaryColor, setFontFamily } = useCustomTheme();
   const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: '+1 (555) 123-4567',
-    location: 'New York, NY',
-    bio: 'Experienced administrator with a passion for efficient systems and user experience.',
-  });
+  const [formData, setFormData] = useState({});
   const [tempTheme, setTempTheme] = useState({
     primaryColor,
     fontFamily,
   });
+
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      setFormData({
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        status: user.status,
+        // bio: user.bio,
+      });
+    }
+  }, [user]);
+
   const [saved, setSaved] = useState(false);
 
   const handleInputChange = (e) => {
@@ -72,11 +80,11 @@ const Profile = () => {
 
   const handleCancel = () => {
     setFormData({
-      name: user?.name || '',
-      email: user?.email || '',
-      phone: '+1 (555) 123-4567',
-      location: 'New York, NY',
-      bio: 'Experienced administrator with a passion for efficient systems and user experience.',
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+      // bio: user.bio,
     });
     setTempTheme({
       primaryColor,
@@ -102,15 +110,37 @@ const Profile = () => {
     { name: 'Poppins', value: '"Poppins", "Helvetica", "Arial", sans-serif' },
   ];
 
+  const canEdit = user?.rolePermission?.includes('profile: edit');
+
   return (
     <Box>
-      <Typography variant="title" gutterBottom fontWeight="bold" mt={3} sx={{ display: 'block' }}>
-        Profile Settings
-      </Typography>
-      
-      <Typography variant="body" color="text.secondary" mb={4} sx={{ display: 'block' }}>
-        Manage your account settings and preferences.
-      </Typography>
+      <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" gap={1}>
+        <Box>
+          <Typography variant="title" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
+            Profile Settings
+          </Typography>
+
+          <Typography variant="body" color="text.secondary" mb={4} sx={{ display: 'block' }}>
+            Manage your account settings and preferences.
+          </Typography>
+        </Box>
+
+
+        <Box display="flex" flexDirection="row" gap={2}>
+          <Button variant="contained" color="secondary">
+            Download Data
+          </Button>
+          <Button variant="contained" color="secondary">
+            Export Profile
+          </Button>
+          {canEdit && (
+            <Button variant="outlined" color="error">
+              Delete Account
+            </Button>
+          )}
+        </Box>
+      </Box>
+
 
       {saved && (
         <Alert severity="success" sx={{ mb: 3 }}>
@@ -120,27 +150,30 @@ const Profile = () => {
 
       <Grid container spacing={3}>
         {/* Profile Information */}
-        <Grid item xs={12} lg={8}>
-          <Paper elevation={2} sx={{ p: 3 }}>
-            <Box display="flex" justifyContent="between" alignItems="center" mb={3}>
+        <Grid item xs={12}>
+          <Card elevation={2} sx={{ p: 3 }}>
+            <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" mb={3}>
               <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
-                Personal Information
+                Personal Information {canEdit}
               </Typography>
               {!editing ? (
-                <Button
-                  startIcon={<EditOutlined />}
-                  onClick={() => setEditing(true)}
-                  variant="outlined"
-                  sx={{mx: 2}}
-                >
-                  Edit Profile
-                </Button>
+                canEdit && (
+                  <Button
+                    startIcon={<EditOutlined />}
+                    onClick={() => setEditing(true)}
+                    variant="outlined"
+                    sx={{ mx: 2 }}
+                  >
+                    Edit Profile
+                  </Button>
+                )
               ) : (
                 <Box display="flex" gap={1}>
                   <Button
                     startIcon={<SaveOutlined />}
                     onClick={handleSave}
                     variant="contained"
+                    color="secondary"
                   >
                     Save
                   </Button>
@@ -148,6 +181,7 @@ const Profile = () => {
                     startIcon={<CancelOutlined />}
                     onClick={handleCancel}
                     variant="outlined"
+                    color="error"
                   >
                     Cancel
                   </Button>
@@ -156,7 +190,7 @@ const Profile = () => {
             </Box>
 
             <Grid container spacing={3}>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={2}>
                 <Box textAlign="center">
                   <Avatar
                     src={user?.avatar}
@@ -164,7 +198,7 @@ const Profile = () => {
                   >
                     {user?.name?.charAt(0)}
                   </Avatar>
-                  {editing && (
+                  {editing && canEdit && (
                     <Button
                       startIcon={<PhotoCameraOutlined />}
                       variant="outlined"
@@ -174,11 +208,12 @@ const Profile = () => {
                     </Button>
                   )}
                 </Box>
+
               </Grid>
 
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={6}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                     <TextField
                       fullWidth
                       label="Full Name"
@@ -186,9 +221,10 @@ const Profile = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       disabled={!editing}
+                      size="small"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                     <TextField
                       fullWidth
                       label="Email"
@@ -196,166 +232,60 @@ const Profile = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       disabled={!editing}
+                      size="small"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} >
                     <TextField
                       fullWidth
-                      label="Phone"
-                      name="phone"
-                      value={formData.phone}
+                      label="Role"
+                      name="role"
+                      value={formData.role}
                       onChange={handleInputChange}
                       disabled={!editing}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Location"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      disabled={!editing}
+                      size="small"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
-                      label="Bio"
-                      name="bio"
-                      value={formData.bio}
+                      label="Status"
+                      name="status"
+                      value={formData.status}
                       onChange={handleInputChange}
                       disabled={!editing}
-                      multiline
-                      rows={3}
+                      size="small"
                     />
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-
-        {/* Account Stats */}
-        <Grid item xs={12} lg={4}>
-          <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
-              Account Statistics
-            </Typography>
-            <Box display="flex" flexDirection="column" gap={2}>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body" sx={{ display: 'block' }}>Member Since</Typography>
-                <Chip label="Jan 2024" size="small" />
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body" sx={{ display: 'block' }}>Last Login</Typography>
-                <Chip label="Today" size="small" color="success" />
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body" sx={{ display: 'block' }}>Profile Views</Typography>
-                <Chip label="1,234" size="small" color="info" />
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body" sx={{ display: 'block' }}>Status</Typography>
-                <Chip label="Active" size="small" color="success" />
-              </Box>
-            </Box>
-          </Paper>
-
-          {/* Quick Actions */}
-          <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
-              Quick Actions
-            </Typography>
-            <Box display="flex" flexDirection="column" gap={1}>
-              <Button variant="outlined" fullWidth>
-                Download Data
-              </Button>
-              <Button variant="outlined" fullWidth>
-                Export Profile
-              </Button>
-              <Button variant="outlined" color="error" fullWidth>
-                Delete Account
-              </Button>
-            </Box>
-          </Paper>
-        </Grid>
-
-        {/* Theme Customization */}
-        <Grid item xs={12}>
-          <Paper elevation={2} sx={{ p: 3 }}>
-            <Box display="flex" alignItems="center" mb={3}>
-              <PaletteOutlined sx={{ mr: 1, color: 'primary.main' }} />
-              <Typography variant="subtitle" fontWeight="bold" sx={{ display: 'block' }}>
-                Theme Customization
-              </Typography>
-            </Box>
-
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
-                  Primary Color
-                </Typography>
-                <Box display="flex" gap={1} flexWrap="wrap">
-                  {colorOptions.map((color) => (
-                    <Box
-                      key={color.value}
-                      onClick={() => handleThemeChange('primaryColor', color.value)}
-                      sx={{
-                        width: 40,
-                        height: 40,
-                        backgroundColor: color.value,
-                        borderRadius: 1,
-                        cursor: 'pointer',
-                        border: tempTheme.primaryColor === color.value ? '3px solid #000' : '1px solid #ccc',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {tempTheme.primaryColor === color.value && (
-                        <Typography variant="text" color="white" fontWeight="bold">
-                          ✓
-                        </Typography>
-                      )}
+              <Grid item xs={12} md={4}>
+                <Card elevation={2} sx={{ p: 2, mb: 3 }}>
+                  <Typography variant="subtitle" fontWeight="bold" mb={1.5} sx={{ display: 'block' }}>
+                    Account Statistics
+                  </Typography>
+                  <Box display="flex" flexDirection="column" gap={1.5}>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="body" sx={{ display: 'block' }}>Member Since</Typography>
+                      <Chip label="Jan 2024" size="small" />
                     </Box>
-                  ))}
-                </Box>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Typography variant="subtitle" fontWeight="bold" mb={2} sx={{ display: 'block' }}>
-                  Font Family
-                </Typography>
-                <FormControl fullWidth>
-                  <InputLabel>Select Font</InputLabel>
-                  <Select
-                    value={tempTheme.fontFamily}
-                    label="Select Font"
-                    onChange={(e) => handleThemeChange('fontFamily', e.target.value)}
-                  >
-                    {fontOptions.map((font) => (
-                      <MenuItem key={font.value} value={font.value}>
-                        <Box sx={{ fontFamily: font.value }}>
-                          {font.name}
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="body" sx={{ display: 'block' }}>Last Login</Typography>
+                      <Chip label="Today" size="small" color="success" />
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="body" sx={{ display: 'block' }}>Profile Views</Typography>
+                      <Chip label="1,234" size="small" color="info" />
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="body" sx={{ display: 'block' }}>Status</Typography>
+                      <Chip label="Active" size="small" color="success" />
+                    </Box>
+                  </Box>
+                </Card>
               </Grid>
             </Grid>
-
-            <Box mt={3}>
-              <Button
-                variant="contained"
-                onClick={handleSave}
-                startIcon={<SaveOutlined />}
-              >
-                Apply Theme Changes
-              </Button>
-            </Box>
-          </Paper>
+          </Card>
         </Grid>
       </Grid>
     </Box>

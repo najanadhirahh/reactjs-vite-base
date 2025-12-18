@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import DummyUsers from '../data/users';
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -11,32 +11,7 @@ export const useAuth = () => {
 };
 
 // Dummy users for testing
-const DUMMY_USERS = [
-  {
-    id: 1,
-    email: 'admin@example.com',
-    password: 'password',
-    name: 'Admin User',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    role: 'admin'
-  },
-  {
-    id: 2,
-    email: 'user@example.com',
-    password: 'password',
-    name: 'User User',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    role: 'user'
-  },
-  {
-    id: 3,
-    email: 'manager@example.com',
-    password: 'password',
-    name: 'Manager User',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    role: 'manager'
-  }
-];
+const DUMMY_USERS = DummyUsers;
 
 // Mock API service
 const mockAPI = {

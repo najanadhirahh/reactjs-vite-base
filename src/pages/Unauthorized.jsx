@@ -1,10 +1,19 @@
 import React from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 // import { ShieldAlert } from '@mui/icons-material';
 
 const Unauthorized = () => {
+    const { user } = useAuth();
     const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         navigate('/dashboard');
+    //     }
+    // }, [navigate]);
 
     return (
         <Container maxWidth="sm">
@@ -21,20 +30,20 @@ const Unauthorized = () => {
 
                 <Box>
                     <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-                        Access Denied
+                        {user ? 'Access Denied' : 'Unauthorized'}
                     </Typography>
                     <Typography variant="body1" color="text.secondary" paragraph>
-                        You do not have permission to access this page.
+                        {user ? 'You do not have permission to access this page.' : 'You are not authorized to access this page.'}
                         Please contact your administrator if you believe this is a mistake.
                     </Typography>
                 </Box>
 
                 <Button
                     variant="contained"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => { user ? navigate(-1) : navigate('/login') }}
                     size="large"
                 >
-                    Return to Dashboard
+                    {user ? 'Return to Dashboard' : 'Return to Login'}
                 </Button>
             </Box>
         </Container>

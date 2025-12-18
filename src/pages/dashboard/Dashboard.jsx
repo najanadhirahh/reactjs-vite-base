@@ -22,6 +22,7 @@ import {
   NotificationsOutlined,
 } from '@mui/icons-material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import Header from '../../components/header';
 
 const Dashboard = () => {
   // Mock data
@@ -90,14 +91,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', py: 2 }}>
-      <Typography variant="title" gutterBottom fontWeight="bold" sx={{ display: 'block' }}>
-        Dashboard Overview
-      </Typography>
-      
-      <Typography variant="body" color="text.secondary" mb={4} sx={{ display: 'block' }}>
-        Welcome back! Here's what's happening with your business today.
-      </Typography>
+    <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Header title="Dashboard Overview" description="Welcome back! Here's what's happening with your business today." />
 
       {/* Stats Cards */}
       <Grid container spacing={3} mb={4}>

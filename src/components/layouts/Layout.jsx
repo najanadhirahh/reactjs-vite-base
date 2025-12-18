@@ -60,7 +60,7 @@ const Layout = () => {
         }}
       >
         {/* Spacer for AppBar */}
-        <Box sx={{ height: 70 }} backgroundColor='#fff'
+        <Box sx={{ height: 75 }} backgroundColor='#fff'
         />
 
         {/* Scrollable content area */}
@@ -69,7 +69,7 @@ const Layout = () => {
           sx={{
             flexGrow: 1,
             overflow: 'auto',
-            // pt: 3,
+            pt: 2,
             px: { xs: 2, md: 1, lg: 1.5 },
             "&::-webkit-scrollbar": {
               display: "none",

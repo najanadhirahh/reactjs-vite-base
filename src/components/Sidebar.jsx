@@ -20,7 +20,6 @@ import {
   SettingsOutlined,
   AnalyticsOutlined,
   PeopleOutlined,
-  LockOutlined,
   ChevronRight,
   ChevronLeft,
 } from '@mui/icons-material';
@@ -30,28 +29,25 @@ const menuItems = [
     text: 'Dashboard',
     icon: <DashboardOutlined />,
     path: '/dashboard',
-  },
-  {
-    text: 'Analytics',
-    icon: <AnalyticsOutlined />,
-    path: '/analytics',
-    allowedRoles: ['admin'],
+    requiredPermission: 'dashboard: view',
   },
   {
     text: 'Users',
     icon: <PeopleOutlined />,
     path: '/users',
-    allowedRoles: ['admin'],
+    requiredPermission: 'user: view',
   },
   {
     text: 'Profile',
     icon: <AccountCircleOutlined />,
     path: '/profile',
+    requiredPermission: 'profile: view',
   },
   {
     text: 'Settings',
     icon: <SettingsOutlined />,
     path: '/settings',
+    requiredPermission: 'setting: view',
   },
 ];
 
@@ -66,6 +62,7 @@ const Sidebar = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -94,47 +91,49 @@ const Sidebar = ({
       <Divider />
 
       <List sx={{ flexGrow: 1, px: 0.5 }}>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding sx={{
-            mb: 0.5,
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <ListItemButton
-              onClick={() => handleNavigation(item.path)}
-              selected={location.pathname === item.path}
-              sx={{
-                borderRadius: 2,
-                width: 40,
-                height: 40,
-                minHeight: 40,
-                justifyContent: 'center',
-                p: 0,
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                },
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                },
-              }}
-            >
-              <ListItemIcon
+        {menuItems
+          .filter(item => !item.requiredPermission || user?.rolePermission?.includes(item.requiredPermission))
+          .map((item) => (
+            <ListItem key={item.text} disablePadding sx={{
+              mb: 0.5,
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+              <ListItemButton
+                onClick={() => handleNavigation(item.path)}
+                selected={location.pathname === item.path}
                 sx={{
-                  minWidth: 'auto',
-                  color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  borderRadius: 2,
+                  width: 40,
+                  height: 40,
+                  minHeight: 40,
                   justifyContent: 'center',
-                  margin: 0,
+                  p: 0,
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'primary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                    },
+                  },
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 'auto',
+                    color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                    justifyContent: 'center',
+                    margin: 0,
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
 
       <Divider />
@@ -200,47 +199,49 @@ const Sidebar = ({
       <Divider />
 
       <List sx={{ flexGrow: 1, px: 1.5 }}>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              onClick={() => handleNavigation(item.path)}
-              selected={location.pathname === item.path}
-              sx={{
-                borderRadius: 2,
-                py: 1.25,
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  '& .MuiListItemIcon-root': {
-                    color: 'primary.contrastText',
-                  },
-                },
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                },
-              }}
-            >
-              <ListItemIcon
+        {menuItems
+          .filter(item => !item.requiredPermission || user?.rolePermission?.includes(item.requiredPermission))
+          .map((item) => (
+            <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                onClick={() => handleNavigation(item.path)}
+                selected={location.pathname === item.path}
                 sx={{
-                  minWidth: 40,
-                  color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  borderRadius: 2,
+                  py: 1.25,
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'primary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                    },
+                    '& .MuiListItemIcon-root': {
+                      color: 'primary.contrastText',
+                    },
+                  },
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                primaryTypographyProps={{
-                  fontWeight: location.pathname === item.path ? 600 : 400,
-                  fontSize: '0.875rem',
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: location.pathname === item.path ? 'inherit' : 'text.secondary',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    fontWeight: location.pathname === item.path ? 600 : 400,
+                    fontSize: '0.875rem',
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
 
       <Divider />

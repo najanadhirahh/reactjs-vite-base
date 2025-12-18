@@ -12,6 +12,9 @@ import {
     Delete as DeleteIcon,
 } from '@mui/icons-material';
 import DataTable from '../../components/DataTable';
+import { DataGrid } from '@mui/x-data-grid';
+import CustomToolbar from '../../components/customToolbar';
+import Header from '../../components/header';
 
 // --- Mock Data Generation ---
 const generateUsers = (count) => {
@@ -38,20 +41,7 @@ const generateUsers = (count) => {
 const rows = generateUsers(50);
 
 const UserList = () => {
-    const [searchText, setSearchText] = useState('');
 
-    const handleSearch = (event) => {
-        setSearchText(event.target.value);
-    };
-
-    // Filter Logic
-    const filteredRows = useMemo(() => {
-        return rows.filter((row) =>
-            row.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            row.email.toLowerCase().includes(searchText.toLowerCase()) ||
-            row.role.toLowerCase().includes(searchText.toLowerCase())
-        );
-    }, [searchText]);
 
     // Status Chip Colors
     const getStatusColor = (status) => {
@@ -124,14 +114,22 @@ const UserList = () => {
     ];
 
     return (
-        <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', py: 2 }}>
-            <DataTable
-                title="Users"
-                rows={filteredRows}
+        <Box sx={{ height: '75vh', width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Header title="Users" description="Manage your user listing" />
+            <DataGrid
+                rows={rows}
                 columns={columns}
-                searchValue={searchText}
-                onSearchChange={handleSearch}
-                initialPageSize={100}
+                slots={{
+                    toolbar: CustomToolbar,
+                }}
+                initialState={{
+                    pagination: {
+                        paginationModel: { pageSize: 100 },
+                    },
+                }}
+                pageSizeOptions={[25, 50, 100]}
+                disableRowSelectionOnClick
+                sx={{ border: 'none' }}
             />
         </Box>
     );
